@@ -67,15 +67,47 @@
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
 
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" name="apellidos" required>
+
             <label for="sexo">Sexo:</label>
             <select id="sexo" name="sexo" required>
                 <option value="masculino">Masculino</option>
                 <option value="femenino">Femenino</option>
-                <option value="otro">Otro</option>
             </select>
 
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" required>
+            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+            <select id="dia" name="dia" required>
+                <option value="">Día</option>
+                <!-- Opciones para los días del 1 al 31 -->
+                <script>
+                    for (let i = 1; i <= 31; i++) {
+                        document.write(`<option value="${i}">${i}</option>`);
+                    }
+                </script>
+            </select>
+
+            <select id="mes" name="mes" required>
+                <option value="">Mes</option>
+                <!-- Opciones para los meses del 1 al 12 -->
+                <script>
+                    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    meses.forEach((mes, index) => {
+                        document.write(`<option value="${index + 1}">${mes}</option>`);
+                    });
+                </script>
+            </select>
+
+            <select id="ano" name="ano" required>
+                <option value="">Año</option>
+                <!-- Opciones para los años -->
+                <script>
+                    const year = new Date().getFullYear();
+                    for (let i = year; i >= year - 100; i--) {
+                        document.write(`<option value="${i}">${i}</option>`);
+                    }
+                </script>
+            </select>
 
             <label for="movil">Móvil:</label>
             <input type="text" id="movil" name="movil" required>
@@ -87,5 +119,54 @@
         </form>
     </div>
 
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            // Validar nombre y apellidos
+            const nombre = document.getElementById('nombre').value;
+            const apellidos = document.getElementById('apellidos').value;
+            const nombreRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$/;
+            if (!nombreRegex.test(nombre) || !nombreRegex.test(apellidos)) {
+                alert("Los campos de Nombre y Apellidos solo pueden contener letras y espacios.");
+                event.preventDefault();
+                return;
+            }
+
+            // Validar móvil
+            const movil = document.getElementById('movil').value;
+            const movilRegex = /^[0-9]+$/;
+            if (!movilRegex.test(movil)) {
+                alert("El campo de Móvil solo puede contener números.");
+                event.preventDefault();
+                return;
+            }
+
+            // Validar email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert("Por favor, introduce un email válido.");
+                event.preventDefault();
+                return;
+            }
+
+            // Validar edad
+            const dia = parseInt(document.getElementById('dia').value);
+            const mes = parseInt(document.getElementById('mes').value) - 1;
+            const ano = parseInt(document.getElementById('ano').value);
+            const fechaNacimiento = new Date(ano, mes, dia);
+            const edad = new Date().getFullYear() - fechaNacimiento.getFullYear();
+            const mesActual = new Date().getMonth();
+            const diaActual = new Date().getDate();
+
+            if (mesActual < mes || (mesActual === mes && diaActual < dia)) {
+                edad--;
+            }
+
+            if (edad < 18) {
+                alert("Debes tener al menos 18 años para registrarte.");
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
