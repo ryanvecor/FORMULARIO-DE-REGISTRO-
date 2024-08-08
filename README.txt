@@ -6,5 +6,13 @@ Crear el archivo en un repositorio
 
 Usar GIT
 
+COMANDOS:
+
+git init -> inicializar el repositorio
+
+git status
+
+git log
+
 MODIFICACIONES: Cuando el usuario envíe el formulario, 
 si los datos son válidos, mostrar mensaje "Usuario registrado con éxito!"
