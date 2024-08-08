@@ -14,5 +14,12 @@ git status
 
 git log
 
+git add archivo.ext
+
+git add .
+
+git commit -m "mensaje"
+
+
 MODIFICACIONES: Cuando el usuario envíe el formulario, 
 si los datos son válidos, mostrar mensaje "Usuario registrado con éxito!"
