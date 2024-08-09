@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Registro</title>
-    <!-- Enlace al archivo CSS externo -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <div class="form-container">
         <h2>Formulario de Registro</h2>
+        
+        <!-- Formulario de Registro -->
         <form id="registroForm" action="#" method="post">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
@@ -24,7 +25,6 @@
                 <option value="femenino">Femenino</option>
             </select>
 
-            <!-- Cambio en el campo de fecha de nacimiento para usar un calendario -->
             <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
             <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
 
@@ -37,6 +37,19 @@
             <input type="submit" value="Registrar">
         </form>
 
+        <!-- Sección de resumen para revisión de datos -->
+        <div id="resumen" style="display:none; margin-top: 20px;">
+            <h3>Revisa tus datos:</h3>
+            <p><strong>Nombre:</strong> <span id="resumenNombre"></span></p>
+            <p><strong>Apellidos:</strong> <span id="resumenApellidos"></span></p>
+            <p><strong>Sexo:</strong> <span id="resumenSexo"></span></p>
+            <p><strong>Fecha de Nacimiento:</strong> <span id="resumenFechaNacimiento"></span></p>
+            <p><strong>Móvil:</strong> <span id="resumenMovil"></span></p>
+            <p><strong>Email:</strong> <span id="resumenEmail"></span></p>
+            <button id="confirmarRegistro">Confirmar Registro</button>
+            <button id="editarRegistro">Editar Datos</button>
+        </div>
+
         <!-- Mensaje de éxito -->
         <div id="successMessage" style="display:none; color: green; margin-top: 20px;">
             Usuario registrado con éxito!
@@ -45,56 +58,90 @@
 
     <script>
         document.getElementById('registroForm').addEventListener('submit', function(event) {
-            // Validar nombre y apellidos
+            event.preventDefault();  // Evitar el envío tradicional del formulario
+
+            // Capturar los valores ingresados
             const nombre = document.getElementById('nombre').value;
             const apellidos = document.getElementById('apellidos').value;
-            const nombreRegex = /^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$/;
-            if (!nombreRegex.test(nombre) || !nombreRegex.test(apellidos)) {
-                alert("Los campos de Nombre y Apellidos solo pueden contener letras y espacios.");
-                event.preventDefault();
-                return;
-            }
-
-            // Validar móvil
+            const sexo = document.getElementById('sexo').value;
+            const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
             const movil = document.getElementById('movil').value;
-            const movilRegex = /^[0-9]+$/;
-            if (!movilRegex.test(movil)) {
-                alert("El campo de Móvil solo puede contener números.");
-                event.preventDefault();
-                return;
-            }
-
-            // Validar email
             const email = document.getElementById('email').value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Por favor, introduce un email válido.");
-                event.preventDefault();
-                return;
+
+            // Validaciones
+            let validationsPassed = true;
+            const regexLetras = /^[a-zA-Z\s]+$/;
+            const regexMovil = /^[0-9]+$/;
+            const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            // Validar que nombres y apellidos no contengan números ni símbolos
+            if (!regexLetras.test(nombre) || !regexLetras.test(apellidos)) {
+                alert("Los campos de Nombre y Apellidos solo deben contener letras.");
+                validationsPassed = false;
             }
 
-            // Validar edad
-            const fechaNacimiento = new Date(document.getElementById('fecha_nacimiento').value);
-            const edad = new Date().getFullYear() - fechaNacimiento.getFullYear();
-            const mesActual = new Date().getMonth();
-            const diaActual = new Date().getDate();
+            // Validar que el móvil solo contenga números
+            if (!regexMovil.test(movil)) {
+                alert("El campo de Móvil solo debe contener números.");
+                validationsPassed = false;
+            }
 
-            if (mesActual < fechaNacimiento.getMonth() || 
-                (mesActual === fechaNacimiento.getMonth() && diaActual < fechaNacimiento.getDate())) {
+            // Validar que el email sea válido
+            if (!regexEmail.test(email)) {
+                alert("El Email ingresado no es válido.");
+                validationsPassed = false;
+            }
+
+            // Validar la edad del usuario
+            const hoy = new Date();
+            const fechaNacimientoDate = new Date(fechaNacimiento);
+            let edad = hoy.getFullYear() - fechaNacimientoDate.getFullYear();
+            const mes = hoy.getMonth() - fechaNacimientoDate.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimientoDate.getDate())) {
                 edad--;
             }
-
             if (edad < 18) {
                 alert("Debes tener al menos 18 años para registrarte.");
-                event.preventDefault();
-                return;
+                validationsPassed = false;
             }
 
-            // Mostrar mensaje de éxito
-            document.getElementById('successMessage').style.display = 'block';
+            // Si todas las validaciones pasan, mostrar el resumen
+            if (validationsPassed) {
+                // Mostrar los datos ingresados en la sección de resumen
+                document.getElementById('resumenNombre').textContent = nombre;
+                document.getElementById('resumenApellidos').textContent = apellidos;
+                document.getElementById('resumenSexo').textContent = sexo;
+                document.getElementById('resumenFechaNacimiento').textContent = fechaNacimiento;
+                document.getElementById('resumenMovil').textContent = movil;
+                document.getElementById('resumenEmail').textContent = email;
 
-            // Detener el envío del formulario para propósitos de demostración
-            event.preventDefault();
+                // Mostrar el resumen y ocultar el formulario original
+                document.getElementById('resumen').style.display = 'block';
+                document.getElementById('registroForm').style.display = 'none';
+            }
+        });
+
+        // Permitir al usuario editar sus datos
+        document.getElementById('editarRegistro').addEventListener('click', function() {
+            // Ocultar el resumen y mostrar nuevamente el formulario
+            document.getElementById('resumen').style.display = 'none';
+            document.getElementById('registroForm').style.display = 'block';
+        });
+
+        // Confirmar el registro (simulado)
+        document.getElementById('confirmarRegistro').addEventListener('click', function() {
+            // Simular el éxito del registro
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('resumen').style.display = 'none';
+
+            // Vaciar los campos del formulario
+            document.getElementById('registroForm').reset();
+
+            // Mostrar nuevamente el formulario para un nuevo registro (si es necesario)
+            setTimeout(function() {
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('registroForm').style.display = 'block';
+            }, 3000);  // Después de 3 segundos, ocultar el mensaje y mostrar el formulario
         });
     </script>
 </body>
