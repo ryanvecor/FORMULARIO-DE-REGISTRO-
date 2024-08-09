@@ -97,5 +97,3 @@ Variaciones de Git rm
 La diferencia principal entre git rm y git reset HEAD radica en que git rm elimina archivos del repositorio y de la historia del proyecto, mientras que git reset saca los cambios del área de preparación y los mueve del espacio de trabajo, sin afectar la historia del repositorio.
 
 
-MODIFICACIONES: Cuando el usuario envíe el formulario, 
-si los datos son válidos, mostrar mensaje "Usuario registrado con éxito!"

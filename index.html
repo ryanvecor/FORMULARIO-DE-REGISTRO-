@@ -11,7 +11,7 @@
 
     <div class="form-container">
         <h2>Formulario de Registro</h2>
-        <form action="#" method="post">
+        <form id="registroForm" action="#" method="post">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
 
@@ -36,10 +36,15 @@
 
             <input type="submit" value="Registrar">
         </form>
+
+        <!-- Mensaje de éxito -->
+        <div id="successMessage" style="display:none; color: green; margin-top: 20px;">
+            Usuario registrado con éxito!
+        </div>
     </div>
 
     <script>
-        document.querySelector('form').addEventListener('submit', function(event) {
+        document.getElementById('registroForm').addEventListener('submit', function(event) {
             // Validar nombre y apellidos
             const nombre = document.getElementById('nombre').value;
             const apellidos = document.getElementById('apellidos').value;
@@ -82,7 +87,14 @@
             if (edad < 18) {
                 alert("Debes tener al menos 18 años para registrarte.");
                 event.preventDefault();
+                return;
             }
+
+            // Mostrar mensaje de éxito
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Detener el envío del formulario para propósitos de demostración
+            event.preventDefault();
         });
     </script>
 </body>
