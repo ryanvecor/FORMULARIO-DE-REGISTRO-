@@ -1,60 +1,81 @@
 /* Archivo: css/style.css */
 
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
+    padding: 0;
 }
 
 .form-container {
-    background-color: #ffffff;
+    max-width: 400px;
+    margin: 50px auto;
     padding: 20px;
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container h2 {
+h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #333333;
 }
 
-.form-container label {
+label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333333;
+    margin: 10px 0 5px;
 }
 
-.form-container input[type="text"],
-.form-container input[type="email"],
-.form-container input[type="date"],
-.form-container select {
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #dddddd;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
 }
 
-.form-container input[type="submit"] {
+input[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #28a745;
+    color: #fff;
     border: none;
     border-radius: 4px;
-    color: #ffffff;
-    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
 }
 
-.form-container input[type="submit"]:hover {
-    background-color: #0056b3;
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Posiciona el video en la parte superior izquierda */
+.video-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000; /* Asegura que el video esté por encima de otros elementos */
+    width: 300px; /* Ajusta el tamaño del video según tus necesidades */
+    height: 170px;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilos adicionales para el resumen y el mensaje de éxito */
+#resumen {
+    display: none;
+}
+
+#successMessage {
+    display: none;
+    color: green;
+    margin-top: 20px;
+    text-align: center;
 }
