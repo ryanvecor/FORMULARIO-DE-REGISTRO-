@@ -77,7 +77,7 @@ document.getElementById('confirmarRegistro').addEventListener('click', function(
     document.getElementById('successMessage').style.display = 'block';
     document.getElementById('resumen').style.display = 'none';
 
-    // Vaciar los campos del formulario
+    // Con esta instrucción los campos del formulario quedan vacíos
     document.getElementById('registroForm').reset();
 
     // Mostrar nuevamente el formulario para un nuevo registro (opcional)
