@@ -1,5 +1,21 @@
 /* Archivo: script/logica.js */
 
+/**Este código usa la API de Youtube para monitorear y 
+ * garantizar que el video no esté en pausa */
+document.addEventListener('DOMContentLoaded', function () {
+    var videoIframe = document.querySelector('.video-container iframe');
+    var videoPlayer = new YT.Player(videoIframe, {
+        events: {
+            'onStateChange': function(event) {
+                if (event.data == YT.PlayerState.PAUSED) {
+                    videoPlayer.playVideo();
+                }
+            }
+        }
+    });
+}); //Fin monitoreo del video Youtube
+
+
 document.getElementById('registroForm').addEventListener('submit', function(event) {
     event.preventDefault();  // Evitar el envío tradicional del formulario
 
