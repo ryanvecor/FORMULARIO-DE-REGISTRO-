@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!--API DE YOUTUBE, necesaria para detectar cuando el video esté en pausa-->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <!-- Contenedor del video -->
     <div class="video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/gNmg8EgJpv8?autoplay=1&mute=1" 
-        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        <!--Se agregan parámetros al enlace del video para que siempre se esté reproduciendo con audio activado-->
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/gNmg8EgJpv8?autoplay=1&mute=0&loop=1&playlist=gNmg8EgJpv8" 
+        title="YouTube video player" frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen></iframe>    
     </div>
 
     <div class="form-container">
